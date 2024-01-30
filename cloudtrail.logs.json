@@ -1,0 +1,53 @@
+{
+    "Records": [ 
+        {
+            "eventVersion": "1.08",
+            "userIdentity": {
+                "type": "AssumedRole",
+                "principalId": "AKIAIOSFODNN7EXAMPLE:idt-018a9411-71d1-4082-8714-044b2211d7d6-contentx-orchestration-",
+                "arn": "arn:aws:sts::000011112222:assumed-role/infrastructure-deploy/idt-018a9411-71d1-4082-8714-044b2211d7d6-contentx-orchestration-",
+                "accountId": "000011112222",
+                "accessKeyId": "AKIAIOSFODNN7EXAMPLE",
+                "sessionContext": {
+                    "sessionIssuer": {
+                        "type": "Role",
+                        "principalId": "AKIAIOSFODNN7EXAMPLE",
+                        "arn": "arn:aws:iam::000011112222:role/infrastructure-deploy/infrastructure-deploy",
+                        "accountId": "000011112222",
+                        "userName": "infrastructure-deploy"
+                    },
+                    "webIdFederationData": {},
+                    "attributes": {
+                        "creationDate": "2023-09-14T14:24:04Z",
+                        "mfaAuthenticated": "false"
+                    }
+                }
+            },
+            "eventTime": "2023-09-14T14:28:59Z",
+            "eventSource": "ec2.amazonaws.com",
+            "eventName": "DeleteSecurityGroup",
+            "awsRegion": "us-east-1",
+            "sourceIPAddress": "54.156.115.188",
+            "userAgent": "APN/1.0 HashiCorp/1.0 Terraform/1.1.9 (+https://www.terraform.io) terraform-provider-aws/5.16.2 (+https://registry.terraform.io/providers/hashicorp/aws) aws-sdk-go/1.45.6 (go1.20.7; linux; amd64)",
+            "requestParameters": {
+                "groupId": "sg-01aa67c4fc1bae3f6"
+            },
+            "responseElements": {
+                "requestId": "68ed0038-4e53-44fb-88d9-797e1354c0e4",
+                "_return": true
+            },
+            "requestID": "68ed0038-4e53-44fb-88d9-797e1354c0e4",
+            "eventID": "6c5358c5-e875-4cfb-9501-4fdc10311c8d",
+            "readOnly": false,
+            "eventType": "AwsApiCall",
+            "managementEvent": true,
+            "recipientAccountId": "000011112222",
+            "eventCategory": "Management",
+            "tlsDetails": {
+                "tlsVersion": "TLSv1.2",
+                "cipherSuite": "ECDHE-RSA-AES128-GCM-SHA256",
+                "clientProvidedHostHeader": "ec2.us-east-1.amazonaws.com"
+            }
+        }
+    ]
+}

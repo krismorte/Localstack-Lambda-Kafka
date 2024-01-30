@@ -1,0 +1,15 @@
+{
+    "filters": [
+      {
+        "source": "ec2.amazonaws.com",
+        "actions": [
+          "DeleteSecurityGroup",
+          "DeleteNatGateway",
+          "DeleteNetworkAcl",
+          "RevokeSecurityGroupEgress",
+          "RevokeSecurityGroupIngress",
+          "AssociateRouteTable"
+        ]
+      }
+    ]
+  }

@@ -1,0 +1,81 @@
+version: '3'
+services:
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    container_name: zookeeper
+    networks:
+      - broker-kafka
+    ports:
+      - 22181:2181
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  broker:
+    image: confluentinc/cp-kafka:latest
+    container_name: broker
+    networks:
+      - broker-kafka
+    ports:
+      - 29092:29092
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_CREATE_TOPICS: "mytopic:1:1"
+    depends_on:
+      zookeeper:
+        condition: service_started 
+
+  localstack:
+    container_name: "localstack"
+    image: localstack/localstack
+    networks:
+      - broker-kafka
+    ports:
+      - 4566:4566
+    environment:
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - DATA_DIR=/tmp/localstack/data
+      - SERVICES=s3,iam,lambda
+      - AWS_DEFAULT_REGION=us-east-1
+      - LAMBDA_DOCKER_NETWORK=broker-kafka
+    # ports:
+    #   - "127.0.0.1:4566:4566"            # LocalStack Gateway
+    #   - "127.0.0.1:4510-4559:4510-4559"  # external services port range
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+  
+  # terraform:
+  #   container_name: "terraform"
+  #   image: hashicorp/terraform:1.5.2
+  #   volumes:
+  #     - $PWD:/data
+  #   working_dir: /data
+  #   entrypoint: sh tf.start.sh
+  #   depends_on:
+  #     localstack:
+  #       condition: service_healthy 
+    
+
+
+#   event-connect-dd-events:
+#     networks:
+#       - broker-kafka
+#     environment:
+#       - DESTINATION_BOOTSTRAP_SERVERS=${DESTINATION_BOOTSTRAP_SERVERS}
+#       - DESTINATION_GROUP_ID=${DESTINATION_GROUP_ID}
+#       - DESTINATION_TOPIC=${DESTINATION_TOPIC}
+#       - PYTHONUNBUFFERED=1
+#     build:
+#       context: ../../event-connect-dd-events
+#       dockerfile: Docker/dd-events-Dockerfile
+#     depends_on:
+#       - broker
+
+networks:
+  broker-kafka:
+    driver: bridge
